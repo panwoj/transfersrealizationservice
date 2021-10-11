@@ -1,0 +1,27 @@
+spring:
+  config:
+    import: "optional:configserver:"
+  application:
+    name: transfers-realization-service
+  profiles:
+    active: production
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: ${spring.application.name}
+      properties:
+        spring.json.trusted.packages: "com.wpirog.commons"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone=http://localhost:8761/eureka/:
+server:
+  port: 9991
